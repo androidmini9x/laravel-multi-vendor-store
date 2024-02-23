@@ -32,7 +32,7 @@ class OrderCreatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -52,6 +52,18 @@ class OrderCreatedNotification extends Notification
                     ->line("A new order #{$this->order->number} created by {$billing->name} from {$billing->country_name}.")
                     ->action('View', url('/dashboard'))
                     ->line('Thank you for using our application!');
+    }
+
+    public function toDatabase($notifiable)
+    {
+        $billing = $this->order->billingAddress;
+
+        return [
+            'body' => "A new order #{$this->order->number} created by {$billing->name} from {$billing->country_name}.",
+            'icon' => "fas fa-file",
+            'url' => url('dashboard'),
+            'order_id' => $this->order->id,
+        ];
     }
 
     /**
