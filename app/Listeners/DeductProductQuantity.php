@@ -26,7 +26,6 @@ class DeductProductQuantity
     public function handle($event)
     {
         $order = $event->order;
-        dd($order->products);
         foreach($order->products as $product) {
             $product->decrement('quantity', $product->pivot->quantity);
         }
