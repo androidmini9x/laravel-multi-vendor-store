@@ -25,6 +25,16 @@
 
   <section class="checkout-wrapper section">
     <div class="container">
+      @if($errors->any())
+      <div class="alert alert-danger">
+          <h4>Error Occured!</h4>
+          <ul>
+              @foreach($errors->all() as $err)
+              <li>{{ $err }}</li>
+              @endforeach
+          </ul>
+      </div>
+      @endif
       <form action="{{route('checkout')}}" method="post">
       @csrf
       <div class="row justify-content-center">
@@ -109,7 +119,7 @@
                     </div>
                     <div class="col-md-12">
                       <div class="single-checkbox checkbox-style-3">
-                        <input type="checkbox" id="checkbox-3">
+                        <input type="checkbox" id="checkbox-3" name="same_billing">
                         <label for="checkbox-3"><span></span></label>
                         <p>My delivery and mailing addresses are the same.</p>
                       </div>

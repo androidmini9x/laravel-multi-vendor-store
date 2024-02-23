@@ -26,6 +26,31 @@ class CheckoutController extends Controller
     }
 
     public function store(Request $request, CartRepository $cart) {
+        $request->validate([
+            'addr.billing.first_name' => 'required|string|max:255',
+            'addr.billing.last_name' => 'required|string|max:255',
+            'addr.billing.email' => 'required|email|string|max:255',
+            'addr.billing.phone_number' => 'required|string|max:255',
+            'addr.billing.street' => 'required|string|max:255',
+            'addr.billing.city' => 'required|string|max:255',
+            'addr.billing.country' => 'required|string|max:255',
+        ]);
+        
+        if (!$request->input('same_billing')) {
+            $request->validate([
+                'addr.shipping.first_name' => 'required|string|max:255',
+                'addr.shipping.last_name' => 'required|string|max:255',
+                'addr.shipping.email' => 'required|email|string|max:255',
+                'addr.shipping.phone_number' => 'required|string|max:255',
+                'addr.shipping.street' => 'required|string|max:255',
+                'addr.shipping.city' => 'required|string|max:255',
+                'addr.shipping.country' => 'required|string|max:255',
+            ]);
+        } else {
+            $addr = $request->input('addr');
+            $addr['shipping'] = $request->input('addr.billing');
+            $request->merge(['addr' => $addr]);
+        }
 
         $items = $cart->get()->groupBy('product.store_id')->all();
 
