@@ -50,7 +50,7 @@ class OrderCreatedNotification extends Notification
                     ->from('no-reply@store.store', 'Customer Service')
                     ->greeting("Hi, {$notifiable->name}")
                     ->line("A new order #{$this->order->number} created by {$billing->name} from {$billing->country_name}.")
-                    ->action('Notification Action', url('/dashboard'))
+                    ->action('View', url('/dashboard'))
                     ->line('Thank you for using our application!');
     }
 
