@@ -27,6 +27,11 @@
                         <div class="alt-option">
                             <span>Or</span>
                         </div>
+                        @if($errors->has(config('fortify.username')))
+                        <div class="alert alert-danger">
+                            {{$errors->first(config('fortify.username'))}}
+                        </div>
+                        @endif
                         <div class="form-group input-group">
                             <label for="reg-fn">Email</label>
                             <input class="form-control" type="email" name="{{ config('fortify.username') }}" id="reg-email" required>
