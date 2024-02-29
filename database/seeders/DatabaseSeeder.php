@@ -36,5 +36,7 @@ class DatabaseSeeder extends Seeder
         //     'password' => Hash::make('admin'),
         // ]);
         // $this->call(UserSeeder::class);
+
+        \App\Models\Admin::factory(4)->create();
     }
 }
