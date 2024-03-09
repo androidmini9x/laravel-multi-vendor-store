@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Actions\Fortify\AuthenticateUser;
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
@@ -70,6 +71,7 @@ class FortifyServiceProvider extends ServiceProvider
         // Fortify::loginView('auth.login');
 
         if(Config::get('fortify.guard') == 'admin') {
+            Fortify::authenticateUsing([new AuthenticateUser, 'authenticate']);
             Fortify::viewPrefix('auth.');
         } else {
             Fortify::viewPrefix('front.auth.');
